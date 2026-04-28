@@ -12,10 +12,12 @@ public class EmailService {
     @Value("${mailgun.api.key}")
     private String apiKey;
 
-    @Value("${mailgun.domain:sandbox9d8f68b5b7bc404dbb860093e23b7e89.mailgun.org}")
+    @Value("${mailgun.domain}")
     private String domain;
 
-    private static final String FROM_EMAIL = "Mailgun Sandbox <postmaster@sandbox9d8f68b5b7bc404dbb860093e23b7e89.mailgun.org>";
+    private String getFromEmail() {
+        return "NexStep Placement <postmaster@" + domain + ">";
+    }
 
 
     public void sendEmail(String to, String subject, String text) {
@@ -23,7 +25,7 @@ public class EmailService {
             // Use .asString() instead of .asJson() to prevent crashes on non-JSON responses
             HttpResponse<String> request = Unirest.post("https://api.mailgun.net/v3/" + domain + "/messages")
                     .basicAuth("api", apiKey)
-                    .field("from", FROM_EMAIL)
+                    .field("from", getFromEmail())
                     .field("to", to)
                     .field("subject", subject)
                     .field("text", text)
