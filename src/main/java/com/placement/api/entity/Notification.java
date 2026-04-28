@@ -1,6 +1,8 @@
 package com.placement.api.entity;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 import java.util.Date;
 
 @Entity
@@ -33,11 +35,13 @@ public class Notification {
     @Column(name = "sent_at")
     private Date sentAt;
 
-    @Column(name = "created_at", columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
-    private Date createdAt = new Date();
+    @CreationTimestamp
+    @Column(name = "created_at", updatable = false)
+    private Date createdAt;
 
-    @Column(name = "updated_at", columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP")
-    private Date updatedAt = new Date();
+    @UpdateTimestamp
+    @Column(name = "updated_at")
+    private Date updatedAt;
 
     public Notification() {}
 

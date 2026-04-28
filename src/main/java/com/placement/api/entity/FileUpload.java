@@ -2,6 +2,8 @@ package com.placement.api.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 import java.util.Date;
 
 @Entity
@@ -34,9 +36,11 @@ public class FileUpload {
     @Column(nullable = false)
     private Long fileSize; // in bytes
 
-    @Column(name = "uploaded_at", columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
-    private Date uploadedAt = new Date();
+    @CreationTimestamp
+    @Column(name = "uploaded_at", updatable = false)
+    private Date uploadedAt;
 
-    @Column(name = "updated_at", columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP")
-    private Date updatedAt = new Date();
+    @UpdateTimestamp
+    @Column(name = "updated_at")
+    private Date updatedAt;
 }
